@@ -1,59 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import axios from "axios";
 import "./helprequest.css";
 
 const HelpRequest = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    location: "",
-    priority: "Moderate",
+  const [sosData, setSosData] = useState({
     message: "",
+    location: { lat: 51.505, lng: -0.09 },
   });
-  
-  const [isEmergency, setIsEmergency] = useState(false);
-  
+  const [username, setUsername] = useState("");
+  const authHeader = localStorage.getItem("authHeader");
+
+  useEffect(() => {
+    const email = localStorage.getItem("userEmail");
+    if (email) {
+      setUsername(email.split("@")[0]);
+    }
+  }, []);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setSosData({ ...sosData, [e.target.name]: e.target.value });
   };
-  
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Help Request Submitted:", formData);
-    alert("Your help request has been submitted.");
+    const sosRequest = {
+      username,
+      message: sosData.message,
+      latitude: sosData.location.lat,
+      longitude: sosData.location.lng,
+    };
+    try {
+      const response = await axios.post("http://localhost:5000/user/sos", sosRequest, {
+        headers: {
+          Authorization: authHeader,
+        },
+      });
+      alert(response.data);
+    } catch (error) {
+      console.error("Error sending SOS:", error);
+      alert("Failed to send SOS. Please log in again.");
+    }
   };
-  
+
+  function LocationMarker() {
+    useMapEvents({
+      click(e) {
+        setSosData({
+          ...sosData,
+          location: e.latlng,
+        });
+      },
+    });
+    return sosData.location ? <Marker position={sosData.location} /> : null;
+  }
+
   return (
     <div className="help-request-container">
-      <h2>Request Help</h2>
-      <form onSubmit={handleSubmit} className="help-form">
-        <label>Name:</label>
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-
-        <label>Contact Number:</label>
-        <input type="text" name="contact" value={formData.contact} onChange={handleChange} required />
-
-        <label>Location:</label>
-        <input type="text" name="location" value={formData.location} onChange={handleChange} required />
-        
-        <label>Priority Level:</label>
-        <select name="priority" value={formData.priority} onChange={handleChange}>
-          <option value="Critical">Critical</option>
-          <option value="Moderate">Moderate</option>
-          <option value="Low">Low</option>
-        </select>
-        
-        <label>Message:</label>
-        <textarea name="message" value={formData.message} onChange={handleChange} required></textarea>
-        
-        <button type="submit" className="submit-btn">Submit Request</button>
-        
-        <div className="emergency-section">
-          <p>Need immediate help?</p>
-          <button type="button" className="emergency-btn" onClick={() => setIsEmergency(true)}>
-            Activate Emergency Mode
-          </button>
+      <form className="help-request-form" onSubmit={handleSubmit}>
+        <h2>Request Help</h2>
+        <textarea
+          name="message"
+          placeholder="Describe your emergency..."
+          value={sosData.message}
+          onChange={handleChange}
+          required
+        />
+        <div className="map-container">
+          <p>📍 Click on the map to set your location</p>
+          <MapContainer center={[51.505, -0.09]} zoom={13} style={{ height: "250px", width: "100%" }}>
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <LocationMarker />
+          </MapContainer>
         </div>
+        <button type="submit">Send SOS</button>
       </form>
     </div>
   );

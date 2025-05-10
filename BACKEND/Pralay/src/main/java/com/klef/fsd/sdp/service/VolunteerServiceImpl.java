@@ -23,7 +23,7 @@ public class VolunteerServiceImpl implements VolunteerService {
 
   @Override
   public List<DisasterAlert> getNearbyAlerts(double latitude, double longitude) {
-    double radius = 100.0; // Example radius in kilometers
+    double radius = 100.0; 
     return disasterAlertRepository.findAll().stream()
         .filter(alert -> calculateDistance(latitude, longitude, alert.getLatitude(), alert.getLongitude()) <= radius)
         .collect(Collectors.toList());

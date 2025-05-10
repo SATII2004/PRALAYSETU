@@ -1,33 +1,35 @@
-.sidebar {
+.sidebar 
+{
   width: 250px;
-  height: 100vh;
-  background: #333;
+  background: #1e3a8a;
   color: white;
   padding: 20px;
-  position: fixed;
+  min-height: 80vh;
 }
 
-.sidebar h2 {
-  text-align: center;
+.sidebar h2 
+{
   margin-bottom: 20px;
 }
 
-.sidebar ul {
+.sidebar ul 
+{
   list-style: none;
   padding: 0;
 }
 
-.sidebar ul li {
-  padding: 10px;
-  border-bottom: 1px solid #555;
+.sidebar li 
+{
+  margin-bottom: 10px;
 }
 
-.sidebar ul li a {
+.sidebar a 
+{
   color: white;
   text-decoration: none;
-  display: block;
 }
 
-.sidebar ul li:hover {
-  background: #555;
+.sidebar a:hover 
+{
+  color: #f0f4f8;
 }

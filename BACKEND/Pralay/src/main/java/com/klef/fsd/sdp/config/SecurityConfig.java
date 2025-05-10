@@ -13,10 +13,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig 
+{
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception 
+    {
         http
             .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity (common in APIs)
             .authorizeHttpRequests(auth -> auth
@@ -32,7 +34,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService() 
+    {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("admin")
             .password(passwordEncoder().encode("admin123"))
@@ -42,7 +45,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() 
+    {
         return new BCryptPasswordEncoder();
     }
 }

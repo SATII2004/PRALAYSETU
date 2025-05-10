@@ -1,110 +1,27 @@
-.alerts-container {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-h2 {
+.alerts-container 
+{
+  padding: 40px;
   text-align: center;
-  margin-bottom: 20px;
+  min-height: 80vh;
+  background: #f9fafb;
+}
+
+.alerts-container h2 
+{
   color: #1e3a8a;
+  margin-bottom: 30px;
 }
-.location-prompt {
-  background: #f0f4f8;
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.location-prompt p {
-  margin: 0 0 10px;
-  color: #1e3a8a;
-  font-weight: bold;
-}
-.location-prompt button {
-  padding: 8px 16px;
-  background: #1e3a8a;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.location-prompt button:hover {
-  background: #dc2626;
-}
-.sos-banner {
-  background: #dc2626;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-.filter-bar {
-  margin-bottom: 20px;
+
+.alerts-list 
+{
   display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
   justify-content: center;
-  gap: 10px;
-  align-items: center;
 }
-.filter-bar label {
-  font-weight: bold;
-  color: #1e3a8a;
-}
-.filter-bar select {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-.alerts-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-.alert-card {
-  background: #f0f4f8;
-  padding: 15px;
-  border-radius: 8px;
-  border-left: 5px solid #6b7280;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
-.alert-card.critical { border-left-color: #dc2626; }
-.alert-card.high { border-left-color: #f97316; }
-.alert-card.moderate { border-left-color: #16a34a; }
-.alert-card.low { border-left-color: #1e3a8a; }
-.alert-card h3 {
-  margin: 0 0 10px;
-  color: #1e3a8a;
-}
-.alert-card p {
-  margin: 5px 0;
-  color: #4b5563;
-}
-.alert-card p strong {
-  color: #1e3a8a;
-}
-.map-section {
-  height: 400px;
-}
-.alerts-map {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-}
-@media (max-width: 768px) {
-  .alerts-list {
-    grid-template-columns: 1fr;
-  }
-  .filter-bar {
-    flex-direction: column;
-  }
+
+.alerts-list p 
+{
+  color: #4b5eAA;
+  font-size: 1.2rem;
 }

@@ -17,7 +17,6 @@ public class DisasterAlert {
   private double longitude;
   private LocalDateTime timestamp;
 
-  // Getters and Setters
   public Long getId() { return id; }
   public void setId(Long id) { this.id = id; }
   public String getType() { return type; }

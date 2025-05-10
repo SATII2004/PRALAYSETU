@@ -33,16 +33,20 @@ const AppRoutes = () => {
   };
 
   const renderNavbar = () => {
-    if (isPublicPage()) {
+    if (isPublicPage()) 
+    {
       return <Navbar />;
     }
-    if (userRole === "admin") {
+    if (userRole === "admin") 
+    {
       return <AdminNavbar />;
     }
-    if (userRole === "volunteer") {
+    if (userRole === "volunteer") 
+    {
       return <VolunteerNavbar />;
     }
-    if (userRole === "user") {
+    if (userRole === "user") 
+    {
       return <UserNavbar />;
     }
     return <Navbar />;

@@ -1,0 +1,26 @@
+.services-container 
+{
+  text-align: center;
+  padding: 40px;
+  min-height: 80vh;
+  background: #f9fafb;
+}
+
+.services-container h2 
+{
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+.services-container ul 
+{
+  list-style: none;
+  padding: 0;
+}
+
+.services-container li 
+{
+  color: #4b5eAA;
+  font-size: 1.2rem;
+  margin: 10px 0;
+}

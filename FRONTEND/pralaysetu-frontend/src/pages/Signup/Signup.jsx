@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import axios from "axios";
 import "./signup.css";
 
-const Signup = () => {
+const Signup = () => 
+  {
   const navigate = useNavigate();
   const [role, setRole] = useState("user");
   const [formData, setFormData] = useState({
@@ -22,21 +24,37 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    alert("Signup successful! Redirecting to dashboard...");
 
-    const dashboardRoutes = {
-      user: "/user-dashboard",
-      volunteer: "/volunteer-dashboard",
-      admin: "/admin-dashboard",
+    const username = `${formData.firstName.toLowerCase()}.${formData.lastName.toLowerCase()}`;
+    const registerData = {
+      username: username,
+      password: formData.password,
+      role: role.toUpperCase(),
+      address: formData.address,
+      latitude: formData.location.lat,
+      longitude: formData.location.lng,
+      email: formData.email,
     };
 
-    setTimeout(() => navigate(dashboardRoutes[role]), 1000);
+    try {
+      const response = await axios.post("http://localhost:5000/auth/register", registerData);
+      alert(response.data);
+      const dashboardRoutes = {
+        user: "/user-dashboard",
+        volunteer: "/volunteer-dashboard",
+        admin: "/admin-dashboard",
+      };
+      setTimeout(() => navigate(dashboardRoutes[role]), 1000);
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("Signup failed! Please try again.");
+    }
   };
 
   function LocationMarker() {

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./login.css";
 
-const Login = () => {
+const Login = ({ setUserRole }) => {
   const [role, setRole] = useState("user");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,27 +15,60 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Login Attempt:", { email, password, role });
-    if (role === "user") navigate("/user-dashboard");
-    else if (role === "volunteer") navigate("/volunteer-dashboard");
-    else if (role === "admin") navigate("/admin-dashboard");
+    const username = email.split("@")[0];
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/auth/login",
+        { username, password },
+        {
+          headers: {
+            Authorization: "Basic " + btoa(`${username}:${password}`),
+          },
+        }
+      );
+      alert(response.data);
+      localStorage.setItem("userRole", role);
+      localStorage.setItem("authHeader", "Basic " + btoa(`${username}:${password}`));
+      setUserRole(role);
+      if (role === "user") navigate("/user-dashboard");
+      else if (role === "volunteer") navigate("/volunteer-dashboard");
+      else if (role === "admin") navigate("/admin-dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Login failed! Please check your credentials.");
+    }
   };
 
-  const handleForgotPassword = () => {
-    if (registeredEmail === "example@gmail.com") {
+  const handleForgotPassword = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/auth/forgot-password", {
+        email: registeredEmail,
+        newPassword: "tempPassword",
+      });
       setOtpSent(true);
-      alert("OTP sent to your registered email.");
-    } else {
+      alert("OTP sent to your registered email. (For demo, OTP is 123456)");
+    } catch (error) {
+      console.error("Forgot password error:", error);
       alert("Email not registered.");
     }
   };
 
-  const handleResetPassword = () => {
+  const handleResetPassword = async () => {
     if (otp === "123456") {
-      alert("Password Reset Successful!");
-      setShowForgotPassword(false);
+      try {
+        await axios.post("http://localhost:5000/auth/forgot-password", {
+          email: registeredEmail,
+          newPassword,
+        });
+        alert("Password Reset Successful!");
+        setShowForgotPassword(false);
+        setOtpSent(false);
+      } catch (error) {
+        console.error("Reset password error:", error);
+        alert("Failed to reset password.");
+      }
     } else {
       alert("Invalid OTP!");
     }

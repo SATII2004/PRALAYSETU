@@ -18,12 +18,14 @@ public class AdminController {
   private AdminService adminService;
 
   @GetMapping("/users")
-  public ResponseEntity<List<User>> getAllUsers() {
+  public ResponseEntity<List<User>> getAllUsers() 
+  {
     return ResponseEntity.ok(adminService.getAllUsers());
   }
 
   @GetMapping("/tasks")
-  public ResponseEntity<List<Task>> getAllTasks() {
+  public ResponseEntity<List<Task>> getAllTasks() 
+  {
     return ResponseEntity.ok(adminService.getAllTasks());
   }
 

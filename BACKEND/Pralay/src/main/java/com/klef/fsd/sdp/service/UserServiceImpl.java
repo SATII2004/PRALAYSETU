@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<DisasterAlert> getNearbyAlerts(double latitude, double longitude) {
-    double radius = 100.0; // Example radius in kilometers
+    double radius = 100.0; 
     return disasterAlertRepository.findAll().stream()
         .filter(alert -> calculateDistance(latitude, longitude, alert.getLatitude(), alert.getLongitude()) <= radius)
         .collect(Collectors.toList());
@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService {
   }
 
   private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-    // Haversine formula to calculate distance between two points
-    double R = 6371; // Earth's radius in kilometers
+    
+    double R = 6371; 
     double dLat = Math.toRadians(lat2 - lat1);
     double dLon = Math.toRadians(lon2 - lon1);
     double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +

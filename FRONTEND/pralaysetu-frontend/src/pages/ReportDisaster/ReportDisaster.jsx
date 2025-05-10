@@ -1,111 +1,81 @@
 import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import axios from "axios";
 import "./reportdisaster.css";
 
 const ReportDisaster = () => {
-  const [formData, setFormData] = useState({
-    disasterType: "",
-    location: "",
+  const [disasterData, setDisasterData] = useState({
+    type: "",
     description: "",
-    latitude: null,
-    longitude: null,
-    images: [],
+    location: { lat: 51.505, lng: -0.09 },
   });
-
-  const [imagePreviews, setImagePreviews] = useState([]);
+  const authHeader = localStorage.getItem("authHeader");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setDisasterData({ ...disasterData, [e.target.name]: e.target.value });
   };
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 5) {
-      alert("You can upload a maximum of 5 images.");
-      return;
-    }
-
-    setFormData({ ...formData, images: files });
-
-    // Generate preview URLs
-    const previews = files.map(file => URL.createObjectURL(file));
-    setImagePreviews(previews);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Disaster Reported:", formData);
-    alert("Disaster report submitted successfully!");
-
-    // TODO: Convert to FormData and send to backend if needed
+    const reportData = {
+      type: disasterData.type,
+      description: disasterData.description,
+      latitude: disasterData.location.lat,
+      longitude: disasterData.location.lng,
+    };
+    try {
+      const response = await axios.post("http://localhost:5000/user/report-disaster", reportData, {
+        headers: {
+          Authorization: authHeader,
+        },
+      });
+      alert(response.data);
+    } catch (error) {
+      console.error("Error reporting disaster:", error);
+      alert("Failed to report disaster. Please log in again.");
+    }
   };
 
-  const LocationMarker = () => {
+  function LocationMarker() {
     useMapEvents({
       click(e) {
-        setFormData((prevData) => ({
-          ...prevData,
-          latitude: e.latlng.lat,
-          longitude: e.latlng.lng,
-          location: `Lat: ${e.latlng.lat}, Lng: ${e.latlng.lng}`,
-        }));
+        setDisasterData({
+          ...disasterData,
+          location: e.latlng,
+        });
       },
     });
-
-    return formData.latitude && formData.longitude ? (
-      <Marker position={[formData.latitude, formData.longitude]} />
-    ) : null;
-  };
+    return disasterData.location ? <Marker position={disasterData.location} /> : null;
+  }
 
   return (
     <div className="report-disaster-container">
-      <h2>Report a Disaster</h2>
-      <form onSubmit={handleSubmit} className="report-form">
-        <label>Disaster Type:</label>
-        <select name="disasterType" value={formData.disasterType} onChange={handleChange} required>
-          <option value="">Select Disaster</option>
-          <option value="Earthquake">Earthquake</option>
-          <option value="Flood">Flood</option>
-          <option value="Wildfire">Wildfire</option>
-          <option value="Cyclone">Cyclone</option>
-          <option value="Landslide">Landslide</option>
-        </select>
-
-        <label>Location:</label>
+      <form className="report-disaster-form" onSubmit={handleSubmit}>
+        <h2>Report a Disaster</h2>
         <input
           type="text"
-          name="location"
-          value={formData.location}
+          name="type"
+          placeholder="Disaster Type (e.g., Flood, Earthquake)"
+          value={disasterData.type}
           onChange={handleChange}
-          placeholder="Type address or click on the map"
+          required
         />
-
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={disasterData.description}
+          onChange={handleChange}
+          required
+        />
         <div className="map-container">
-          <MapContainer center={[20, 78]} zoom={4} style={{ height: "100%", width: "100%" }}>
+          <p>📍 Click on the map to set the disaster location</p>
+          <MapContainer center={[51.505, -0.09]} zoom={13} style={{ height: "250px", width: "100%" }}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <LocationMarker />
           </MapContainer>
         </div>
-
-        <label>Description:</label>
-        <textarea name="description" value={formData.description} onChange={handleChange} required></textarea>
-
-        <label>Upload Images (max 5):</label>
-        <input
-          type="file"
-          name="images"
-          accept="image/*"
-          multiple
-          onChange={handleImageUpload}
-        />
-        <div className="image-preview-container">
-          {imagePreviews.map((src, index) => (
-            <img key={index} src={src} alt={`Preview ${index + 1}`} className="preview-image" />
-          ))}
-        </div>
-
-        <button type="submit" className="submit-btn">Submit Report</button>
+        <button type="submit">Report Disaster</button>
       </form>
     </div>
   );

@@ -10,14 +10,13 @@ public class User {
   @Id
   private String username;
   private String password;
-  private String role; // USER, VOLUNTEER, ADMIN
+  private String role; 
   private String email;
   private String address;
   private double latitude;
   private double longitude;
-  private boolean available; // For volunteers
+  private boolean available;
 
-  // Getters and Setters
   public String getUsername() { return username; }
   public void setUsername(String username) { this.username = username; }
   public String getPassword() { return password; }

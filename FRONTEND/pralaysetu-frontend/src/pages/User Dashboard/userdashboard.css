@@ -1,48 +1,35 @@
-.dashboard-container {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    text-align: center;
-    background: #e3f2fd;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .dashboard-container h1 {
-    font-size: 26px;
-    color: #1e88e5;
-    margin-bottom: 20px;
-  }
-  
-  .dashboard-section {
-    background: #fff;
-    padding: 20px;
-    margin: 15px 0;
-    border-radius: 8px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .dashboard-section h2 {
-    color: #1e88e5;
-  }
-  
-  .dashboard-section p {
-    color: #666;
-    font-size: 14px;
-  }
-  
-  button {
-    background: #1e88e5;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s;
-  }
-  
-  button:hover {
-    background: #1565c0;
-  }
-  
+.user-dashboard-container 
+{
+  text-align: center;
+  padding: 40px;
+  min-height: 80vh;
+  background: #f9fafb;
+}
+
+.user-dashboard-container h2 
+{
+  color: #1e3a8a;
+  margin-bottom: 30px;
+}
+
+.dashboard-options 
+{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.dashboard-btn
+{
+  padding: 15px 30px;
+  background-color: #16a34a;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.dashboard-btn:hover 
+{
+  background-color: #13863c;
+}

@@ -9,13 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthServiceImpl implements AuthService {
+public class AuthServiceImpl implements AuthService
+{
   @Autowired
   private UserRepository userRepository;
 
   @Override
-  public String registerUser(RegisterRequest request) {
-    if (userRepository.existsById(request.getUsername())) {
+  public String registerUser(RegisterRequest request) 
+  {
+    if (userRepository.existsById(request.getUsername())) 
+    {
       return "Username already exists!";
     }
     User user = new User();
@@ -31,7 +34,8 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public String loginUser(LoginRequest request) {
+  public String loginUser(LoginRequest request)
+  {
     User user = userRepository.findById(request.getUsername()).orElse(null);
     if (user == null || !user.getPassword().equals(request.getPassword())) {
       return "Invalid username or password!";
@@ -40,9 +44,11 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public String forgotPassword(ForgotPasswordRequest request) {
+  public String forgotPassword(ForgotPasswordRequest request) 
+  {
     User user = userRepository.findByEmail(request.getEmail());
-    if (user == null) {
+    if (user == null)
+    {
       return "Email not registered!";
     }
     user.setPassword(request.getNewPassword());

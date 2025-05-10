@@ -13,7 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
-public class AdminController {
+public class AdminController 
+{
   @Autowired
   private AdminService adminService;
 
@@ -30,7 +31,8 @@ public class AdminController {
   }
 
   @PostMapping("/alerts")
-  public ResponseEntity<String> createAlert(@RequestBody DisasterAlert alert) {
+  public ResponseEntity<String> createAlert(@RequestBody DisasterAlert alert) 
+  {
     adminService.createAlert(alert);
     return ResponseEntity.ok("Alert Created Successfully! 🚨");
   }

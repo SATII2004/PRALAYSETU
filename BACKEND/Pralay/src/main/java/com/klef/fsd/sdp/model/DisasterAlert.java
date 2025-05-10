@@ -17,14 +17,38 @@ public class DisasterAlert {
   private double longitude;
   private LocalDateTime timestamp;
 
-  public Long getId() { return id; }
-  public void setId(Long id) { this.id = id; }
-  public String getType() { return type; }
-  public void setType(String type) { this.type = type; }
-  public String getDescription() { return description; }
-  public void setDescription(String description) { this.description = description; }
-  public double getLatitude() { return latitude; }
-  public void setLatitude(double latitude) { this.latitude = latitude; }
+  public Long getId() 
+  { 
+	  return id; 
+  }
+  public void setId(Long id) 
+  { 
+	  this.id = id; 
+  }
+  public String getType() 
+  { 
+	  return type; 
+  }
+  public void setType(String type)
+  {
+	  this.type = type; 
+  }
+  public String getDescription() 
+  { 
+	  return description; 
+  }
+  public void setDescription(String description) 
+  { 
+	  this.description = description; 
+  }
+  public double getLatitude() 
+  { 
+	  return latitude; 
+  }
+  public void setLatitude(double latitude) 
+  { 
+	  this.latitude = latitude; 
+  }
   public double getLongitude() { return longitude; }
   public void setLongitude(double longitude) { this.longitude = longitude; }
   public LocalDateTime getTimestamp() { return timestamp; }

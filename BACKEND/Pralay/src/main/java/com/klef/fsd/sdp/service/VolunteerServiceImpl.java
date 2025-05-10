@@ -22,7 +22,8 @@ public class VolunteerServiceImpl implements VolunteerService {
   private UserRepository userRepository;
 
   @Override
-  public List<DisasterAlert> getNearbyAlerts(double latitude, double longitude) {
+  public List<DisasterAlert> getNearbyAlerts(double latitude, double longitude)
+  {
     double radius = 100.0; 
     return disasterAlertRepository.findAll().stream()
         .filter(alert -> calculateDistance(latitude, longitude, alert.getLatitude(), alert.getLongitude()) <= radius)
@@ -30,12 +31,14 @@ public class VolunteerServiceImpl implements VolunteerService {
   }
 
   @Override
-  public List<SOSRequest> getSOSRequests() {
+  public List<SOSRequest> getSOSRequests()
+  {
     return sosRequestRepository.findAll();
   }
 
   @Override
-  public void setAvailability(String username, boolean available) {
+  public void setAvailability(String username, boolean available)
+  {
     User volunteer = userRepository.findById(username).orElseThrow(() -> new RuntimeException("Volunteer not found"));
     volunteer.setAvailable(available);
     userRepository.save(volunteer);

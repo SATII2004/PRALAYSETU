@@ -12,14 +12,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService 
+{
   @Autowired
   private DisasterAlertRepository disasterAlertRepository;
   @Autowired
   private SOSRequestRepository sosRequestRepository;
 
   @Override
-  public List<DisasterAlert> getNearbyAlerts(double latitude, double longitude) {
+  public List<DisasterAlert> getNearbyAlerts(double latitude, double longitude) 
+  {
     double radius = 100.0; 
     return disasterAlertRepository.findAll().stream()
         .filter(alert -> calculateDistance(latitude, longitude, alert.getLatitude(), alert.getLongitude()) <= radius)
@@ -27,18 +29,21 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void sendSOS(SOSRequest request) {
+  public void sendSOS(SOSRequest request) 
+  {
     request.setTimestamp(LocalDateTime.now());
     sosRequestRepository.save(request);
   }
 
   @Override
-  public void reportDisaster(DisasterAlert disasterAlert) {
+  public void reportDisaster(DisasterAlert disasterAlert) 
+  {
     disasterAlert.setTimestamp(LocalDateTime.now());
     disasterAlertRepository.save(disasterAlert);
   }
 
-  private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  private double calculateDistance(double lat1, double lon1, double lat2, double lon2)
+  {
     
     double R = 6371; 
     double dLat = Math.toRadians(lat2 - lat1);

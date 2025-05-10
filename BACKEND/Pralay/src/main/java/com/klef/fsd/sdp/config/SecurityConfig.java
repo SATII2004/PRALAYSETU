@@ -20,15 +20,15 @@ public class SecurityConfig
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception 
     {
         http
-            .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity (common in APIs)
+            .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll() // Public access to auth endpoints
+                .requestMatchers("/auth/**").permitAll() 
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/user/**").hasAnyRole("USER", "VOLUNTEER", "ADMIN")
                 .requestMatchers("/volunteer/**").hasAnyRole("VOLUNTEER", "ADMIN")
                 .anyRequest().authenticated()
             )
-            .httpBasic(httpBasic -> {}); // Use basic authentication
+            .httpBasic(httpBasic -> {}); 
 
         return http.build();
     }

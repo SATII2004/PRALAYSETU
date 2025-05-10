@@ -16,17 +16,20 @@ public class AuthController {
   private AuthService authService;
 
   @PostMapping("/register")
-  public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request) {
+  public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request) 
+  {
     return ResponseEntity.ok(authService.registerUser(request));
   }
 
   @PostMapping("/login")
-  public ResponseEntity<String> loginUser(@RequestBody LoginRequest request) {
+  public ResponseEntity<String> loginUser(@RequestBody LoginRequest request) 
+  {
     return ResponseEntity.ok(authService.loginUser(request));
   }
 
   @PostMapping("/forgot-password")
-  public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+  public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) 
+  {
     return ResponseEntity.ok(authService.forgotPassword(request));
   }
 }

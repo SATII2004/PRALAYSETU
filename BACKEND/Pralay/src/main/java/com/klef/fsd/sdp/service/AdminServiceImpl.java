@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService
+{
   @Autowired
   private UserRepository userRepository;
   @Autowired
@@ -22,17 +23,20 @@ public class AdminServiceImpl implements AdminService {
   private DisasterAlertRepository disasterAlertRepository;
 
   @Override
-  public List<User> getAllUsers() {
+  public List<User> getAllUsers() 
+  {
     return userRepository.findAll();
   }
 
   @Override
-  public List<Task> getAllTasks() {
+  public List<Task> getAllTasks()
+  {
     return taskRepository.findAll();
   }
 
   @Override
-  public void createAlert(DisasterAlert alert) {
+  public void createAlert(DisasterAlert alert)
+  {
     alert.setTimestamp(LocalDateTime.now());
     disasterAlertRepository.save(alert);
   }

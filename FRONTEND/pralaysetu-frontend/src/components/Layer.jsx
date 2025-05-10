@@ -1,11 +1,22 @@
 import React from "react";
 
-function Layer({ data }) {
+const Layer = ({ alerts }) => {
   return (
-    <div className="layer">
-      <p>Layer Data: {data ? JSON.stringify(data) : "No data"}</p>
+    <div className="layer-container">
+      <h3>Live Disaster Alerts</h3>
+      <ul>
+        {alerts.length > 0 ? (
+          alerts.map((alert, index) => (
+            <li key={index} className="alert-item">
+              <strong>{alert.type}</strong> - {alert.location} ({alert.time})
+            </li>
+          ))
+        ) : (
+          <p>No active alerts</p>
+        )}
+      </ul>
     </div>
   );
-}
+};
 
 export default Layer;

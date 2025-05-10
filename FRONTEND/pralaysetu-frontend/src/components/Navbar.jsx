@@ -1,25 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../styles/navbar.css";
-import logo from "../assets/images/AppLogo.png";
+import "../styles/navbar.css"; 
+import AppLogo from '../assets/images/AppLogo.png'; 
 
-function Navbar() {
+const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <nav className="navbar">
-      <div className="navbar-logo">
-        <img src={logo} alt="PralaySetu Logo" className="logo" />
-        <span className="app-name">PralaySetu: Bridging Crisis to Safety</span>
+      <div className="logo">
+        <img src={AppLogo} alt="App Logo" />
+        <span>PralaySetu</span>
       </div>
-      <ul className="navbar-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/login">Login</Link></li>
-        <li><Link to="/signup">Signup</Link></li>
-        <li><Link to="/safety-tips">Safety Tips</Link></li>
-        <li><Link to="/emergency-contacts">Emergency Contacts</Link></li>
-        <li><Link to="/disaster-history">Disaster History</Link></li>
-      </ul>
+
+      <div className="nav-links">
+        <Link to="/">🏠 Home</Link> 
+        <Link to="/signup">📝 Signup</Link>
+        <Link to="/login">🔑 Login</Link>
+      
+      </div>
+
+      {/* Hamburger Icon for Mobile */}
+      <div className={`hamburger ${isMobileMenuOpen ? "open" : ""}`} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="mobile-menu">
+          <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>🏠 Home</Link>
+          <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>🔑 Login</Link>
+          <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>📝 Signup</Link>
+          <Link to="/report-disaster" onClick={() => setIsMobileMenuOpen(false)}>⚠️ Report Disaster</Link>
+          <Link to="/real-time-alerts" onClick={() => setIsMobileMenuOpen(false)}>🚨 Real-Time Alerts</Link>
+          <Link to="/user-dashboard" onClick={() => setIsMobileMenuOpen(false)}>👤 User Dashboard</Link>
+          <Link to="/volunteer-dashboard" onClick={() => setIsMobileMenuOpen(false)}>🙌 Volunteer Dashboard</Link>
+          <Link to="/admin-dashboard" onClick={() => setIsMobileMenuOpen(false)}>🛠 Admin Dashboard</Link>
+         
+        </div>
+      )}
     </nav>
   );
-}
+};
 
 export default Navbar;
+

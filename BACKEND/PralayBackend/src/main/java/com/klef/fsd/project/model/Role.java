@@ -1,5 +1,7 @@
 package com.klef.fsd.project.model;
 
-public class Role {
-
+public enum Role {
+    USER,
+    VOLUNTEER,
+    ADMIN
 }

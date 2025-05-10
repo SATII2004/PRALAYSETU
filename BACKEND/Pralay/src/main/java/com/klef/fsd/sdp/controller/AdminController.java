@@ -1,6 +1,6 @@
 package com.klef.fsd.sdp.controller;
 
-import com.klef.fsd.sdp.dto.DisasterAlertDTO;
+import com.klef.fsd.sdp.model.DisasterAlert;
 import com.klef.fsd.sdp.model.Task;
 import com.klef.fsd.sdp.model.User;
 import com.klef.fsd.sdp.service.AdminService;
@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class AdminController {
   @Autowired
   private AdminService adminService;
@@ -21,20 +22,14 @@ public class AdminController {
     return ResponseEntity.ok(adminService.getAllUsers());
   }
 
-  @PostMapping("/alerts")
-  public ResponseEntity<String> createDisasterAlert(@RequestBody DisasterAlertDTO alertDTO) {
-    adminService.createDisasterAlert(alertDTO);
-    return ResponseEntity.ok("Disaster alert created! 🚨");
-  }
-
-  @PostMapping("/tasks")
-  public ResponseEntity<String> assignTask(@RequestBody Task task) {
-    adminService.assignTask(task);
-    return ResponseEntity.ok("Task assigned! ✅");
-  }
-
   @GetMapping("/tasks")
   public ResponseEntity<List<Task>> getAllTasks() {
     return ResponseEntity.ok(adminService.getAllTasks());
+  }
+
+  @PostMapping("/alerts")
+  public ResponseEntity<String> createAlert(@RequestBody DisasterAlert alert) {
+    adminService.createAlert(alert);
+    return ResponseEntity.ok("Alert Created Successfully! 🚨");
   }
 }

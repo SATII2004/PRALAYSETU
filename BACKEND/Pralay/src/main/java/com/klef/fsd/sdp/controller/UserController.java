@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class UserController {
   @Autowired
   private UserService userService;
@@ -24,5 +25,11 @@ public class UserController {
   public ResponseEntity<String> sendSOS(@RequestBody SOSRequest request) {
     userService.sendSOS(request);
     return ResponseEntity.ok("SOS Request Sent! 🆘");
+  }
+
+  @PostMapping("/report-disaster")
+  public ResponseEntity<String> reportDisaster(@RequestBody DisasterAlert disasterAlert) {
+    userService.reportDisaster(disasterAlert);
+    return ResponseEntity.ok("Disaster Reported Successfully! 🚨");
   }
 }

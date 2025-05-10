@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/volunteer")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class VolunteerController {
   @Autowired
   private VolunteerService volunteerService;
@@ -26,8 +27,8 @@ public class VolunteerController {
   }
 
   @PostMapping("/availability")
-  public ResponseEntity<String> updateAvailability(@RequestParam String username, @RequestParam boolean available) {
-    volunteerService.updateAvailability(username, available);
-    return ResponseEntity.ok("Availability updated! ✅");
+  public ResponseEntity<String> setAvailability(@RequestParam String username, @RequestParam boolean available) {
+    volunteerService.setAvailability(username, available);
+    return ResponseEntity.ok("Availability Updated! 🌟");
   }
 }

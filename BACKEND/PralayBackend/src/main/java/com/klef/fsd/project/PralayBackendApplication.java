@@ -8,6 +8,7 @@ public class PralayBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PralayBackendApplication.class, args);
+		System.out.println("Project is running successfully!!!!!!!!");
 	}
 
 }

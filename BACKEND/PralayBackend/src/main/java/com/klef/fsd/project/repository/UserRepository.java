@@ -1,5 +1,5 @@
 package com.klef.fsd.project.repository;
 
-public class PralayRepository {
+public class UserRepository {
 
 }

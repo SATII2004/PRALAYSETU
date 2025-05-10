@@ -1,5 +1,5 @@
 package com.klef.fsd.project.model;
 
-public class Pralay {
+public class Role {
 
 }

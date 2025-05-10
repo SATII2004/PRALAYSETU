@@ -7,36 +7,46 @@ import com.klef.fsd.sdp.repository.SOSRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
   @Autowired
-  private DisasterAlertRepository alertRepository;
+  private DisasterAlertRepository disasterAlertRepository;
   @Autowired
-  private SOSRequestRepository sosRepository;
+  private SOSRequestRepository sosRequestRepository;
 
   @Override
   public List<DisasterAlert> getNearbyAlerts(double latitude, double longitude) {
-    List<DisasterAlert> alerts = alertRepository.findAll();
-    return alerts.stream()
-        .filter(alert -> calculateDistance(latitude, longitude, alert.getLatitude(), alert.getLongitude()) <= 100)
+    double radius = 100.0; // Example radius in kilometers
+    return disasterAlertRepository.findAll().stream()
+        .filter(alert -> calculateDistance(latitude, longitude, alert.getLatitude(), alert.getLongitude()) <= radius)
         .collect(Collectors.toList());
   }
 
   @Override
   public void sendSOS(SOSRequest request) {
-    sosRepository.save(request);
+    request.setTimestamp(LocalDateTime.now());
+    sosRequestRepository.save(request);
+  }
+
+  @Override
+  public void reportDisaster(DisasterAlert disasterAlert) {
+    disasterAlert.setTimestamp(LocalDateTime.now());
+    disasterAlertRepository.save(disasterAlert);
   }
 
   private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-    double latDiff = Math.toRadians(lat2 - lat1);
-    double lonDiff = Math.toRadians(lon2 - lon1);
-    double a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+    // Haversine formula to calculate distance between two points
+    double R = 6371; // Earth's radius in kilometers
+    double dLat = Math.toRadians(lat2 - lat1);
+    double dLon = Math.toRadians(lon2 - lon1);
+    double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-               Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2);
+               Math.sin(dLon / 2) * Math.sin(dLon / 2);
     double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return 6371 * c; // Earth radius in km
+    return R * c;
   }
 }

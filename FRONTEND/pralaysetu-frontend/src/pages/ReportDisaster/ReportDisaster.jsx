@@ -1,81 +1,61 @@
 import React, { useState } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import UserNavbar from "../../components/UserNavbar";
+import Footer from "../../components/Footer";
+import Geolocation from "../../components/Geolocation";
 import "./reportdisaster.css";
 
-const ReportDisaster = () => {
-  const [formData, setFormData] = useState({
-    disasterType: "",
-    location: "",
-    description: "",
-    latitude: null,
-    longitude: null,
-  });
+function ReportDisaster() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState(null);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Disaster Reported:", formData);
-    alert("Disaster report submitted successfully!");
-  };
-
-  const LocationMarker = () => {
-    useMapEvents({
-      click(e) {
-        setFormData((prevData) => ({
-          ...prevData,
-          latitude: e.latlng.lat,
-          longitude: e.latlng.lng,
-          location: `Lat: ${e.latlng.lat}, Lng: ${e.latlng.lng}`,
-        }));
+    const report = { title, description, location };
+    const response = await fetch("http://localhost:8080/api/reports", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
+      body: JSON.stringify(report),
     });
-
-    return formData.latitude && formData.longitude ? (
-      <Marker position={[formData.latitude, formData.longitude]} />
-    ) : null;
+    if (response.ok) {
+      alert("Disaster reported successfully!");
+      setTitle("");
+      setDescription("");
+      setLocation(null);
+    } else {
+      alert("Failed to report disaster!");
+    }
   };
 
   return (
     <div className="report-disaster-container">
-      <h2>Report a Disaster</h2>
-      <form onSubmit={handleSubmit} className="report-form">
-        <label>Disaster Type:</label>
-        <select name="disasterType" value={formData.disasterType} onChange={handleChange} required>
-          <option value="">Select Disaster</option>
-          <option value="Earthquake">Earthquake</option>
-          <option value="Flood">Flood</option>
-          <option value="Wildfire">Wildfire</option>
-          <option value="Cyclone">Cyclone</option>
-          <option value="Landslide">Landslide</option>
-        </select>
-
-        <label>Location:</label>
-        <input 
-          type="text" 
-          name="location" 
-          value={formData.location} 
-          onChange={handleChange} 
-          placeholder="Type address or click on the map"
-        />
-
-        <div className="map-container">
-          <MapContainer center={[20, 78]} zoom={4} style={{ height: "100%", width: "100%" }}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <LocationMarker />
-          </MapContainer>
-        </div>
-
-        <label>Description:</label>
-        <textarea name="description" value={formData.description} onChange={handleChange} required></textarea>
-
-        <button type="submit" className="submit-btn">Submit Report</button>
-      </form>
+      <UserNavbar />
+      <div className="report-disaster-content">
+        <h2>Report a Disaster</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Disaster Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <textarea
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          ></textarea>
+          <Geolocation onLocationFetched={setLocation} />
+          <button type="submit">Submit Report</button>
+        </form>
+      </div>
+      <Footer />
     </div>
   );
-};
+}
 
 export default ReportDisaster;

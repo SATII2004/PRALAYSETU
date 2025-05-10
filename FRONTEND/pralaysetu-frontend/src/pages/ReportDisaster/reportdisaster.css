@@ -1,84 +1,64 @@
 .report-disaster-container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  background:orange;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #333;
-  animation: fadeIn 1s ease-in-out;
-}
-
-.report-form {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  background: #f4f4f4;
 }
 
-label {
-  font-weight: bold;
-  margin-top: 10px;
-  font-size: 16px;
+.report-disaster-content {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
 }
 
-input, select, textarea {
+.report-disaster-content h2 {
+  font-size: 2.5rem;
+  color: #1a3c34;
+  margin-bottom: 20px;
+}
+
+.report-disaster-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.report-disaster-content input,
+.report-disaster-content textarea {
   padding: 10px;
-  margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
-  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
 }
 
-input:focus, select:focus, textarea:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.report-disaster-content textarea {
+  height: 100px;
+  resize: none;
 }
 
-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-.map-container {
-  height: 300px;
-  margin-top: 10px;
-  border-radius: 5px;
-  overflow: hidden;
-  animation: fadeIn 1.5s ease-in-out;
-}
-
-.submit-btn {
-  background-color: #007bff;
-  color: rgb(204, 87, 87);
-  font-size: 18px;
+.report-disaster-content button {
   padding: 10px;
-  margin-top: 15px;
+  background-color: #ffd700;
+  color: #1a3c34;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  font-size: 1rem;
 }
 
-.submit-btn:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
+.report-disaster-content button:hover {
+  background-color: #e6c200;
 }
 
 @media (max-width: 768px) {
-  .report-disaster-container {
-    width: 90%;
+  .report-disaster-content form {
     padding: 15px;
+    width: 90%;
   }
 }

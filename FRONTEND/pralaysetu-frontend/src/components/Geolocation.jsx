@@ -1,37 +1,36 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-const Geolocation = ({ onLocationUpdate }) => {
-  const [location, setLocation] = useState({ lat: null, lng: null });
+function Geolocation({ onLocationFetched }) {
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
-    if ("geolocation" in navigator) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const newLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          setLocation(newLocation);
-          if (onLocationUpdate) onLocationUpdate(newLocation);
+          const { latitude, longitude } = position.coords;
+          setLocation({ latitude, longitude });
+          if (onLocationFetched) {
+            onLocationFetched({ latitude, longitude });
+          }
         },
-        (error) => console.error("Geolocation error:", error),
-        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        (error) => {
+          console.error("Error fetching location:", error);
+        }
       );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
     }
-  }, []);
+  }, [onLocationFetched]);
 
   return (
     <div>
-      <p>
-        <strong>Your Location:</strong>{" "}
-        {location.lat && location.lng
-          ? `${location.lat}, ${location.lng}`
-          : "Fetching..."}
-      </p>
+      {location ? (
+        <p>
+          Location: {location.latitude}, {location.longitude}
+        </p>
+      ) : (
+        <p>Fetching location...</p>
+      )}
     </div>
   );
-};
+}
 
 export default Geolocation;

@@ -1,0 +1,174 @@
+.emergency-contacts-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #f4f4f4;
+}
+
+.emergency-contacts-content {
+  flex: 1;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.emergency-contacts-header {
+  background: linear-gradient(135deg, #1a3c34, #2e856e);
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.emergency-contacts-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #ffd700;
+}
+
+.emergency-contacts-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contact-category {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+}
+
+.category-title {
+  font-size: 1.8rem;
+  color: #1a3c34;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ffd700;
+  padding-bottom: 10px;
+}
+
+.contact-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: translateY(-3px);
+  background: #e6f0fa;
+}
+
+.contact-icon {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+  object-fit: contain;
+  border-radius: 5px;
+  background: rgba(26, 60, 52, 0.1);
+  padding: 5px;
+}
+
+.contact-info {
+  flex: 1;
+  text-align: left;
+}
+
+.contact-info h4 {
+  font-size: 1.2rem;
+  color: #1a3c34;
+  margin: 0;
+}
+
+.contact-info p {
+  font-size: 1rem;
+  color: #333;
+  margin: 5px 0;
+}
+
+.call-button {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: #ffd700;
+  color: #1a3c34;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.call-button:hover {
+  background-color: #e6c200;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .emergency-contacts-header h2 {
+    font-size: 2rem;
+  }
+
+  .emergency-contacts-header p {
+    font-size: 1rem;
+  }
+
+  .category-title {
+    font-size: 1.5rem;
+  }
+
+  .contact-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .contact-info h4 {
+    font-size: 1.1rem;
+  }
+
+  .contact-info p {
+    font-size: 0.9rem;
+  }
+
+  .call-button {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .emergency-contacts-content {
+    padding: 20px 10px;
+  }
+
+  .emergency-contacts-header {
+    padding: 20px;
+  }
+
+  .contact-items {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-item {
+    padding: 10px;
+  }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+  }
+}

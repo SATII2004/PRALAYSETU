@@ -1,0 +1,53 @@
+.my-help-requests-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #f4f4f4;
+}
+
+.my-help-requests-content {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+}
+
+.my-help-requests-content h2 {
+  font-size: 2.5rem;
+  color: #1a3c34;
+  margin-bottom: 20px;
+}
+
+.requests-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.request-item {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+}
+
+.request-item h3 {
+  font-size: 1.5rem;
+  color: #1a3c34;
+  margin-bottom: 10px;
+}
+
+.request-item p {
+  color: #555;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .request-item {
+    width: 90%;
+  }
+}

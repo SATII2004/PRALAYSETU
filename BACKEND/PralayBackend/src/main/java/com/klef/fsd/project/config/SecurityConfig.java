@@ -12,8 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.klef.fsd.project.security.JwtAuthenticationFilter;
 import com.klef.fsd.project.security.CustomUserDetailsService;
+import com.klef.fsd.project.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,8 +33,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // Public endpoints
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Swagger endpoints
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/api/user/**").hasRole("USER")
                 .requestMatchers("/api/volunteer/**").hasRole("VOLUNTEER")
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")

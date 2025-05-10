@@ -46,8 +46,11 @@ public class UserService {
     }
 
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new ResourceNotFoundException("User not found with email: " + email);
+        }
+        return user;
     }
 
     public User updateUser(UserDTO userDTO) {
@@ -87,8 +90,10 @@ public class UserService {
     }
 
     public void resetPassword(String email, String otp, String newPassword) {
-        Otp otpEntity = otpRepository.findByEmailAndOtp(email, otp)
-                .orElseThrow(() -> new BadRequestException("Invalid OTP or email."));
+        Otp otpEntity = otpRepository.findByEmailAndOtp(email, otp);
+        if (otpEntity == null) {
+            throw new BadRequestException("Invalid OTP or email.");
+        }
         if (otpEntity.getExpiresAt().isBefore(LocalDateTime.now())) {
             throw new BadRequestException("OTP has expired.");
         }
